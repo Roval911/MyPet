@@ -1,0 +1,14 @@
+
+{% block title %}Все объявления{% endblock %}
+
+{% block content %}
+    <h1>Все объявления</h1>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h3><a href="{% url 'post' post.id %}">{{ post.title }}</a></h3>
+                <p>{{ post.body }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
