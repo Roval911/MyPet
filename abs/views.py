@@ -14,3 +14,8 @@ class PostDetailView(DetailView):
     model = Post
     context_object_name = 'post'
     template_name = 'abs/post.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.object.title
+        return context

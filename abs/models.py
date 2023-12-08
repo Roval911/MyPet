@@ -20,6 +20,9 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'slug': self.slug})
+
     def save(self, *args, **kwargs):
         """
         Сохранение полей модели при их отсутствии заполнения
