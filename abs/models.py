@@ -5,7 +5,6 @@ from modules.services.utils import unique_slugify
 
 
 class Post(models.Model):
-
     class Status(models.TextChoices):
         RENT = 'RT', 'Rent'
         SALE = 'SL', 'Sale'
