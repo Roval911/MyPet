@@ -21,8 +21,8 @@ class Post(models.Model):
     create = models.DateTimeField(auto_now_add=True, )
     autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='abs_post')
     type_of_housing = models.CharField(max_length=2, choices=TypeOfHousing.choices, default=TypeOfHousing.FLAT)
-    price = models.IntegerField(default=0)
-    number_of_rooms = models.IntegerField(default=1)
+    price = models.PositiveIntegerField(default=0,)
+    number_of_rooms = models.PositiveIntegerField(default=1,)
 
     def __str__(self):
         return f"{self.title}"

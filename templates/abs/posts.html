@@ -2,8 +2,15 @@
 {% block title %}Все объявления{% endblock %}
 
 {% block content %}
+    <h4 class="widget-title">Фильтры поиска</h4>
+	<ul>
+		<form method="GET">
+             {{ filter.form }}
+             <input class="btn btn-primary" type="submit" value="Найти">
+        </form>
+	</ul>
     <h1>Все объявления</h1>
-        {% for post in posts %}
+        {% for post in filter.qs %}
                 <div class="blog-item">
                     <div class="blog-text text-box text-white">
                         <h3><a class='read-more' href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
