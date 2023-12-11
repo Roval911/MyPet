@@ -1,132 +1,145 @@
 {% load static %}
-<html lang="zxx"><head>
-	<title>{% block title %}{% endblock %}</title>
-	<meta charset="UTF-8">
-	<meta name="description" content="EndGam Gaming Magazine Template">
-	<meta name="keywords" content="endGam,gGaming, magazine, html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Favicon -->
-	<link href="img/favicon.ico" rel="shortcut icon">
+<html lang="zxx">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="EndGam Gaming Magazine Template">
+    <meta name="keywords" content="endGam,gGaming, magazine, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Google Font -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
-
-
-	<!-- Stylesheets -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
-	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %} ">
-	<link rel="stylesheet" href="{% static 'css/slicknav.min.css' %} ">
-	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %} ">
-	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %} ">
-	<link rel="stylesheet" href="{% static 'css/animate.css' %} ">
-
-	<!-- Main Stylesheets -->
-	<link rel="stylesheet" href="{% static 'css/style.css' %} ">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
 
 
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %} ">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %} ">
+
+    <!-- Main Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %} ">
+
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 <body>
-	<!-- Page Preloder -->
-	<div id="preloder" style="display: none;">
-		<div class="loader" style="display: none;"></div>
-	</div>
+<!-- Page Preloder -->
+<div id="preloder" style="display: none;">
+    <div class="loader" style="display: none;"></div>
+</div>
 
-	<!-- Header section -->
-	<header class="header-section">
-		<div class="header-warp">
-			<div class="header-social d-flex justify-content-end">
-				<p>Социальные сети</p>
-				<a href="#">VK</a>
-				<a href="#">Telegram</a>
-			</div>
-			<div class="header-bar-warp d-flex">
-				<!-- site logo -->
-				<a href="home.html" class="site-logo">
-					<img src="{% static 'img/logo.png' %}" alt="">
-				</a>
-				<nav class="top-nav-area w-100">
-					<div class="user-panel">
-						<a href="">Вход</a> / <a href="">Регистрация</a>
-					</div>
-					<!-- Menu -->
-					<ul class="main-menu primary-menu">
-						<li><a href="home.html">Главная</a></li>
-						<li><a href="games.html">Категории</a>
-							<ul class="sub-menu">
-								<li><a href="game-single.html">Аренда</a></li>
-                                <li><a href="game-single.html">Продажа</a></li>
-							</ul>
-						</li>
-						<li><a href="review.html">Добавить объявление</a></li>
-						<li><a href="blog.html">О нас</a></li>
-						<li><a href="contact.html">Контакты</a></li>
-					</ul>
-				</nav>
-			</div>
-		<div class="slicknav_menu"><a href="#" aria-haspopup="true" role="button" tabindex="0" class="slicknav_btn slicknav_collapsed" style="outline: none;"><span class="slicknav_menutxt">MENU</span><span class="slicknav_icon"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a><ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
-						<li><a href="home.html" role="menuitem" tabindex="-1">Home</a></li>
-						<li class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row" style="outline: none;"></a><a href="games.html" tabindex="-1">Games</a>
-							<span class="slicknav_arrow"><i class="fa fa-angle-down"></i></span><ul class="sub-menu slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
-								<li><a href="game-single.html" role="menuitem" tabindex="-1">Game Singel</a></li>
-							</ul>
-						</li>
-						<li><a href="review.html" role="menuitem" tabindex="-1">Reviews</a></li>
-						<li><a href="blog.html" role="menuitem" tabindex="-1">News</a></li>
-						<li><a href="contact.html" role="menuitem" tabindex="-1">Contact</a></li>
-					</ul></div></div>
-	</header>
-	<!-- Blog section -->
-	<section class="blog-section spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-xl-9 col-lg-8 col-md-7">
-					<!-- Blog item -->
-					<div class="blog-item">
+<!-- Header section -->
+<header class="header-section">
+    <div class="header-warp">
+        <div class="header-social d-flex justify-content-end">
+            <p>Социальные сети</p>
+            <a href="#">VK</a>
+            <a href="#">Telegram</a>
+        </div>
+        <div class="header-bar-warp d-flex">
+            <!-- site logo -->
+            <a href="{% url 'posts' %}" class="site-logo">
+                <img src="{% static 'img/logo.png' %}" alt="">
+            </a>
+            <nav class="top-nav-area w-100">
+                <div class="user-panel">
+                    <a href="">Вход</a> / <a href="">Регистрация</a>
+                </div>
+                <!-- Menu -->
+                <ul class="main-menu primary-menu">
+                    <li><a href="{% url 'posts' %}">Главная</a></li>
+                    <li><a href="games.html">Категории</a>
+                        <ul class="sub-menu">
+                            <li><a href="game-single.html">Аренда</a></li>
+                            <li><a href="game-single.html">Продажа</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'post_create' %}">Добавить объявление</a></li>
+                    <li><a href="blog.html">О нас</a></li>
+                    <li><a href="contact.html">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="slicknav_menu"><a href="#" aria-haspopup="true" role="button" tabindex="0"
+                                      class="slicknav_btn slicknav_collapsed" style="outline: none;"><span
+                class="slicknav_menutxt">MENU</span><span class="slicknav_icon"><span
+                class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span
+                class="slicknav_icon-bar"></span></span></a>
+            <ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
+                <li><a href="home.html" role="menuitem" tabindex="-1">Home</a></li>
+                <li class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem" aria-haspopup="true"
+                                                                  tabindex="-1" class="slicknav_item slicknav_row"
+                                                                  style="outline: none;"></a><a href="games.html"
+                                                                                                tabindex="-1">Games</a>
+                    <span class="slicknav_arrow"><i class="fa fa-angle-down"></i></span>
+                    <ul class="sub-menu slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
+                        <li><a href="game-single.html" role="menuitem" tabindex="-1">Game Singel</a></li>
+                    </ul>
+                </li>
+                <li><a href="review.html" role="menuitem" tabindex="-1">Reviews</a></li>
+                <li><a href="blog.html" role="menuitem" tabindex="-1">News</a></li>
+                <li><a href="contact.html" role="menuitem" tabindex="-1">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- Blog section -->
+<section class="blog-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                <!-- Blog item -->
+                <div class="blog-item">
 
-                        {% block content %}
-                        {% endblock %}
-					</div>
-				</div>
-				<div class="col-xl-3 col-lg-4 col-md-5 sidebar">
-					<div id="stickySidebar" class="" style=""><div class="inner-wrapper-sticky" style="position: relative;">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
+                <div id="stickySidebar" class="" style="">
+                    <div class="inner-wrapper-sticky" style="position: relative;">
 
                         <div class="widget-item">
                             <h4 class="widget-title"></h4>
-							<h4 class="widget-title">Рекомендации</h4>
-							<div class="trending-widget">
-								<div class="tw-item">
-									<div class="tw-text">
-										<div class="tw-meta">11.11.18  /  in <a href="">Games</a></div>
-										<h5>The best online game is out now!</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div></div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<footer class="footer-section">
-		<div class="container">
-			<ul class="main-menu footer-menu">
-				<li><a href="">Главная</a></li>
-				<li><a href="">Контакты</a></li>
-			</ul>
-		</div>
-	</footer>
-	<!-- Footer section end -->
-	<!--====== Javascripts & Jquery ======-->
-	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
-	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-	<script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
-	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-	<script src="{% static 'js/main.js' %}"></script>
-</body></html>
+                            <h4 class="widget-title">Рекомендации</h4>
+                            <div class="trending-widget">
+                                <div class="tw-item">
+                                    <div class="tw-text">
+                                        <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
+                                        <h5>The best online game is out now!</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer-section">
+    <div class="container">
+        <ul class="main-menu footer-menu">
+            <li><a href="">Главная</a></li>
+            <li><a href="">Контакты</a></li>
+        </ul>
+    </div>
+</footer>
+<!-- Footer section end -->
+<!--====== Javascripts & Jquery ======-->
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/jquery.sticky-sidebar.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

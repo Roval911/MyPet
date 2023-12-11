@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="card-body">
+        <h3>Создать объявление</h3>
+        <form method="post" action="{% url 'post_create' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-dark">Добавить объявление</button>
+        </form>
+    </div>
+{% endblock %}
