@@ -8,7 +8,7 @@ class PostListView(ListView):
     context_object_name = 'posts'
     template_name = 'abs/posts.html'
     ordering = ['-create']
-    paginate_by = 1
+    paginate_by = 5
 
 
 class PostDetailView(DetailView):
