@@ -6,4 +6,7 @@
     <p>Тип жилья - {{ post.type_of_housing }}</p>
     <p>Количество комнат - {{ post.number_of_rooms }}</p>
     <p>{{ post.body }}</p>
+    <button class="btn-dark"><a href="{% url 'post_update' post.slug %}">Редактировать</a></button>
+    <button class="btn-dark"><a href="{% url 'post_delete' post.slug %}">Удалить</a></button>
+
 {% endblock %}

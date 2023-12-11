@@ -14,3 +14,5 @@ class PostForms(ModelForm):
             'number_of_rooms': 'Количество комнат',
             'body': 'Описание',
         }
+
+

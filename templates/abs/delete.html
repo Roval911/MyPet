@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h4>Удаление статьи</h4>
+    <form method="post">
+        {% csrf_token %}
+        <p>Вы собираетесь удалить объявление: {{ posts.title }}</p>
+        <button type="submit" class="btn btn-dark">Удалить объявление</button>
+        <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Отменить удаление</a>
+    </form>
+{% endblock %}
