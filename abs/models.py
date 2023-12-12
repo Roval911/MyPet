@@ -37,3 +37,7 @@ class Post(models.Model):
         if not self.slug:
             self.slug = unique_slugify(self, self.title)
         super().save(*args, **kwargs)
+
+
+
+
