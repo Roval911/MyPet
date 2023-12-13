@@ -8,8 +8,9 @@ class AuthorRequiredMixin(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return self.handle_no_permission()
-        if request.user.is_authenticated:
-            if request.user != self.get_object().author or request.user.is_staff:
-                messages.info(request, 'Изменение и удаление статьи доступно только автору')
-                return redirect('posts')
-        return super().dispatch(request, *args, **kwargs)
+        post_author = self.get_object().author
+        if request.user == post_author or request.user.is_staff:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.info(request, 'Изменение и удаление статьи доступно только автору')
+            return redirect('posts')
