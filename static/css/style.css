@@ -28,7 +28,7 @@ h4,
 h5,
 h6 {
 	margin: 0;
-	color: #111111;
+	color: #ffffff;
 	font-weight: 500;
 }
 
@@ -58,7 +58,7 @@ h6 {
 
 p {
 	font-size: 15px;
-	color: #585858;
+	color: #ffffff;
 	line-height: 1.6;
 	font-weight: 500;
 }
@@ -128,7 +128,7 @@ ol {
 }
 
 .spad {
-	padding-top: 105px;
+	padding-top: 165px;
 	padding-bottom: 105px;
 }
 
@@ -607,7 +607,7 @@ ol {
 .text-box p {
 	font-size: 15px;
 	font-weight: 500;
-	color: #68647d;
+	color: #ffffff;
 	margin-bottom: 35px;
 }
 
@@ -674,7 +674,6 @@ ol {
 }
 
 .blog-item {
-	margin-top: 86px;
 }
 
 .blog-item .blog-thumb {
