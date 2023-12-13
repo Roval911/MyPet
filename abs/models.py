@@ -19,7 +19,7 @@ class Post(models.Model):
     body = models.TextField()
     type = models.CharField(max_length=2, choices=Status.choices, default=Status.SALE)
     create = models.DateTimeField(auto_now_add=True, )
-    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='abs_post')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='abs_post', default=1)
     type_of_housing = models.CharField(max_length=2, choices=TypeOfHousing.choices, default=TypeOfHousing.FLAT)
     price = models.PositiveIntegerField(default=0,)
     number_of_rooms = models.PositiveIntegerField(default=1,)

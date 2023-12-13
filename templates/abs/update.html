@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h4>Редактировать новость: {{ article.title }}</h4>
+    <h4>Редактировать новость: {{ post.title }}</h4>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
