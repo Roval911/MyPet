@@ -12,17 +12,83 @@ from django.views import View
 from django.views.generic import DetailView, UpdateView, CreateView, TemplateView
 from django.db import transaction
 from django.urls import reverse_lazy
-from abs.permissions import IsOwnerOrReadOnly
+from django.http import JsonResponse
+from rest_framework import generics, permissions, viewsets
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .mixins import UserIsNotAuthenticated
 from .forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm, UserLoginForm, UserPasswordChangeForm, \
     UserForgotPasswordForm, UserSetNewPasswordForm
-from rest_framework import generics, permissions, viewsets
 from .models import Profile
 from .serializers import ProfileSerializer
 
 User = get_user_model()
 
 
+# Представления для Django REST Framework
+class ProfileAPIView(generics.RetrieveUpdateAPIView):
+    """
+    API View для просмотра и обновления профиля пользователя
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.profile
+
+
+class UserRegisterAPIView(UserIsNotAuthenticated, generics.CreateAPIView):
+    """
+    API View для регистрации пользователя
+    """
+    queryset = User.objects.all()
+    serializer_class = UserRegisterForm
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        user.is_active = False
+        user.save()
+
+        # Отправка письма для подтверждения email
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        activation_url = reverse_lazy('api_confirm_email', kwargs={'uidb64': uid, 'token': token})
+        current_site = Site.objects.get_current().domain
+        send_mail(
+            'Подтвердите свой электронный адрес',
+            f'Пожалуйста, перейдите по следующей ссылке, чтобы подтвердить свой адрес электронной почты: http://{current_site}{activation_url}',
+            'service.notehunter@gmail.com',
+            [user.email],
+            fail_silently=False,
+        )
+
+        return Response({"message": "Регистрация успешна. Письмо для подтверждения email отправлено."})
+
+
+class UserConfirmEmailAPIView(APIView):
+    """
+    API View для подтверждения email пользователя
+    """
+
+    def get(self, request, uidb64, token):
+        try:
+            uid = urlsafe_base64_decode(uidb64)
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            login(request, user)
+            return Response({"message": "Email успешно подтвержден"})
+        else:
+            return Response({"error": "Неверная ссылка для подтверждения email"}, status=400)
+
+
+# Представления для Django
 class ProfileDetailView(DetailView):
     """
     Представление для просмотра профиля
@@ -218,12 +284,3 @@ class EmailConfirmationFailedView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Ваш электронный адрес не активирован'
         return context
-
-
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
