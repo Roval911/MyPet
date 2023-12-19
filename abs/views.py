@@ -6,8 +6,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .filters import PostFilter
 from .forms import PostForms
 from .mixins import AuthorRequiredMixin
-from rest_framework import generics
+from rest_framework import generics, permissions, viewsets
 
+from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
 
@@ -82,11 +83,10 @@ class PostDeleteView(AuthorRequiredMixin, DeleteView):
         return context
 
 
-class PostAPIView(generics.ListCreateAPIView):
+class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-
-class PostUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

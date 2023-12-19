@@ -12,11 +12,13 @@ from django.views import View
 from django.views.generic import DetailView, UpdateView, CreateView, TemplateView
 from django.db import transaction
 from django.urls import reverse_lazy
-
+from abs.permissions import IsOwnerOrReadOnly
 from .mixins import UserIsNotAuthenticated
-from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm, UserLoginForm, UserPasswordChangeForm, \
     UserForgotPasswordForm, UserSetNewPasswordForm
+from rest_framework import generics, permissions, viewsets
+from .models import Profile
+from .serializers import ProfileSerializer
 
 User = get_user_model()
 
@@ -216,3 +218,12 @@ class EmailConfirmationFailedView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Ваш электронный адрес не активирован'
         return context
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

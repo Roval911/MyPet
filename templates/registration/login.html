@@ -1,0 +1,11 @@
+{% block content %}
+    <h4>Авторизация на сайте</h4>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-dark">Авторизоваться</button>
+    </form>
+    <p>Забыли пароль?</p>
+    <a href="{% url 'password_reset' %}" class="btn btn-sm btn-primary">Востановить пароль</a>
+
+{% endblock %}
