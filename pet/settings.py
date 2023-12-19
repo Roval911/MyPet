@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'system.apps.SystemConfig',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 SITE_ID = 1
@@ -147,5 +148,9 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ]
 }

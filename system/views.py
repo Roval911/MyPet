@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView, \
     PasswordResetConfirmView
@@ -12,28 +12,70 @@ from django.views import View
 from django.views.generic import DetailView, UpdateView, CreateView, TemplateView
 from django.db import transaction
 from django.urls import reverse_lazy
-from django.http import JsonResponse
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions, viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework.authtoken.models import Token
 from .mixins import UserIsNotAuthenticated
-from .forms import UserUpdateForm, ProfileUpdateForm, UserRegisterForm, UserLoginForm, UserPasswordChangeForm, \
-    UserForgotPasswordForm, UserSetNewPasswordForm
-from .models import Profile
-from .serializers import ProfileSerializer
+from .forms import *
+from .serializers import *
 
 User = get_user_model()
 
 
 # Представления для Django REST Framework
+
+
+class UserLoginAPIView(APIView):
+    """
+    API View для входа пользователя
+    """
+
+    serializer_class = UserLoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        username = serializer.validated_data.get('username')
+        password = serializer.validated_data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+
+            # Получение токена
+            token, created = Token.objects.get_or_create(user=user)
+
+            return Response({"token": token.key})
+        else:
+            return Response({"error": "Неверные учетные данные"}, status=400)
+
+
+class UserLogoutAPIView(APIView):
+    """
+    API View для выхода пользователя
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserLogoutSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data={})
+        serializer.is_valid(raise_exception=True)
+
+        logout(request)
+        return Response({"message": "Вы успешно вышли"})
+
+
 class ProfileAPIView(generics.RetrieveUpdateAPIView):
     """
     API View для просмотра и обновления профиля пользователя
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return self.request.user.profile
@@ -44,7 +86,7 @@ class UserRegisterAPIView(UserIsNotAuthenticated, generics.CreateAPIView):
     API View для регистрации пользователя
     """
     queryset = User.objects.all()
-    serializer_class = UserRegisterForm
+    serializer_class = UserRegisterSerializer
 
     def perform_create(self, serializer):
         user = serializer.save()
