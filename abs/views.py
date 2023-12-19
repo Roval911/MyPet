@@ -6,6 +6,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .filters import PostFilter
 from .forms import PostForms
 from .mixins import AuthorRequiredMixin
+from rest_framework import generics
+
+from .serializers import PostSerializer
 
 
 class PostListView(ListView):
@@ -77,3 +80,13 @@ class PostDeleteView(AuthorRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удаление объявления: {self.object.title}'
         return context
+
+
+class PostAPIView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostUpdateDeleteAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

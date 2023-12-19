@@ -17,8 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from abs.views import PostAPIView, PostUpdateDeleteAPIView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('abs.urls')),
     path('', include('system.urls')),
+    path('api/v1/postlist/', PostAPIView.as_view()),
+    path('api/v1/postdetail/<int:pk>/', PostUpdateDeleteAPIView.as_view()),
 ]

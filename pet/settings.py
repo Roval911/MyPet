@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modules.services',
     'django_filters',
-    'system.apps.SystemConfig'
+    'system.apps.SystemConfig',
+    'rest_framework',
 ]
 
 SITE_ID = 1
@@ -114,9 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru'
+
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
