@@ -23,6 +23,11 @@ class Post(models.Model):
     type_of_housing = models.CharField(max_length=2, choices=TypeOfHousing.choices, default=TypeOfHousing.FLAT)
     price = models.PositiveIntegerField(default=0,)
     number_of_rooms = models.PositiveIntegerField(default=1,)
+    views = models.ManyToManyField(User, related_name='post_views', blank=True)
+
+    def add_view(self, user):
+        if user not in self.views.all():
+            self.views.add(user)
 
     def __str__(self):
         return f"{self.title}"

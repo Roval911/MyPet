@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h4>Рекомендуемые статьи по просмотрам</h4>
+  <ul>
+    {% for post in posts_rec %}
+      <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> ({{ post.views_count }} просмотров)</p>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -33,6 +34,25 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.title
+        if self.request.user.is_authenticated:
+            self.object.add_view(self.request.user)
+        context['views_count'] = self.object.views.count()
+        return context
+
+
+class RecommendedPostsView(ListView):
+    model = Post
+    context_object_name = 'posts_rec'
+    template_name = 'abs/recommended_posts.html'
+    ordering = ['-views__count']  # Сортировка по количеству просмотров
+
+    def get_queryset(self):
+        # Выбираем рекомендуемые статьи, сортируем по количеству просмотров и ограничиваем до 5
+        return Post.objects.annotate(views_count=Count('views')).order_by('-views_count')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 
