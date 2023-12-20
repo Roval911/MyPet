@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -19,6 +19,15 @@ class PostListView(ListView):
     template_name = 'abs/posts.html'
     ordering = ['-create']
     paginate_by = 5
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Post.objects.all()
+
+        if query:
+            object_list = object_list.filter(Q(title__icontains=query) | Q(body__icontains=query))
+
+        return object_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
