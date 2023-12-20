@@ -2,6 +2,9 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
     <h3>{{ post.title }}</h3>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% endif %}
     <p>Цена - {{ post.price }}</p>
     <p>Тип жилья - {{ post.type_of_housing }}</p>
     <p>Количество комнат - {{ post.number_of_rooms }}</p>

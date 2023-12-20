@@ -4,6 +4,10 @@ from django.urls import reverse
 from modules.services.utils import unique_slugify
 
 
+
+def upload_path_autor(instance, filename):
+    return 'media/posts_images/{0}/{1}'.format(instance.author, filename)
+
 class Post(models.Model):
     class Status(models.TextChoices):
         RENT = 'RT', 'Аренда'
@@ -24,6 +28,7 @@ class Post(models.Model):
     price = models.PositiveIntegerField(default=0,)
     number_of_rooms = models.PositiveIntegerField(default=1,)
     views = models.ManyToManyField(User, related_name='post_views', blank=True)
+    image = models.ImageField(upload_to=upload_path_autor, blank=True)
 
     def add_view(self, user):
         if user not in self.views.all():
@@ -46,3 +51,6 @@ class Post(models.Model):
 
 
 
+class PostsImages(models.Model):
+    images = models.ImageField(upload_to=upload_path_autor, blank=True)
+    post = models.ForeignKey(Post, related_name='PostsImages', on_delete=models.CASCADE)

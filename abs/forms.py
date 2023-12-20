@@ -5,7 +5,7 @@ from .models import Post
 class PostForms(ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'type', 'type_of_housing', 'price', 'number_of_rooms', 'body')
+        fields = ('title', 'type', 'type_of_housing', 'price', 'number_of_rooms', 'body', 'image',)
         labels = {
             'title': 'Название',
             'type': 'Тип объявления',
@@ -13,6 +13,7 @@ class PostForms(ModelForm):
             'price': 'Цена',
             'number_of_rooms': 'Количество комнат',
             'body': 'Описание',
+            'image': 'Фотографии',
         }
 
     def __init__(self, *args, **kwargs):
