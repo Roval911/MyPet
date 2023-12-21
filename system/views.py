@@ -189,7 +189,7 @@ class UserRegisterView(UserIsNotAuthenticated, CreateView):
     Представление регистрации на сайте с формой регистрации
     """
     form_class = UserRegisterForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('posts')
     template_name = 'system/user_register.html'
 
     def get_context_data(self, **kwargs):
@@ -326,7 +326,7 @@ class FeedbackCreateView(SuccessMessageMixin, CreateView):
     success_message = 'Ваше письмо успешно отправлено администрации сайта'
     template_name = 'system/feedback.html'
     extra_context = {'title': 'Контактная форма'}
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('posts')
 
     def form_valid(self, form):
         if form.is_valid():
