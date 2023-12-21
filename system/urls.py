@@ -27,4 +27,5 @@ urlpatterns = [
     path('email-confirmation-sent/', EmailConfirmationSentView.as_view(), name='email_confirmation_sent'),
     path('email-confirmed/', EmailConfirmedView.as_view(), name='email_confirmed'),
     path('email-confirmation-failed/', EmailConfirmationFailedView.as_view(), name='email_confirmation_failed'),
+    path('feedback/', FeedbackCreateView.as_view(), name='feedback'),
 ]
