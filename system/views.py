@@ -22,6 +22,7 @@ from .forms import *
 from .serializers import *
 from .services.email import send_contact_email_message
 from .services.utils import get_client_ip
+from .services.task import *
 
 User = get_user_model()
 
@@ -102,7 +103,7 @@ class UserRegisterAPIView(UserIsNotAuthenticated, generics.CreateAPIView):
         current_site = Site.objects.get_current().domain
         send_mail(
             'Подтвердите свой электронный адрес',
-            f'Пожалуйста, перейдите по следующей ссылке, чтобы подтвердить свой адрес электронной почты: http://{current_site}{activation_url}',
+            f'Пожалуйста, перейдите по следующей ссылке, чтобы подтвердить свой адрес электронной почты: {current_site}{activation_url}',
             'service.notehunter@gmail.com',
             [user.email],
             fail_silently=False,
@@ -188,8 +189,8 @@ class UserRegisterView(UserIsNotAuthenticated, CreateView):
     Представление регистрации на сайте с формой регистрации
     """
     form_class = UserRegisterForm
-    success_url = reverse_lazy('posts')
-    template_name = 'system/registration/user_register.html'
+    success_url = reverse_lazy('home')
+    template_name = 'system/user_register.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -200,20 +201,8 @@ class UserRegisterView(UserIsNotAuthenticated, CreateView):
         user = form.save(commit=False)
         user.is_active = False
         user.save()
-        # Функционал для отправки письма и генерации токена
-        token = default_token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        activation_url = reverse_lazy('confirm_email', kwargs={'uidb64': uid, 'token': token})
-        current_site = Site.objects.get_current().domain
-        send_mail(
-            'Подтвердите свой электронный адрес',
-            f'Пожалуйста, перейдите по следующей ссылке, чтобы подтвердить свой адрес электронной почты: http://{current_site}{activation_url}',
-            'service.notehunter@gmail.com',
-            [user.email],
-            fail_silently=False,
-        )
+        send_activate_email_message_task.delay(user.id)
         return redirect('email_confirmation_sent')
-
 
 class UserLoginView(SuccessMessageMixin, LoginView):
     """
@@ -332,15 +321,12 @@ class EmailConfirmationFailedView(TemplateView):
 
 
 class FeedbackCreateView(SuccessMessageMixin, CreateView):
-    """
-    представленмие обратной связи
-    """
     model = Feedback
     form_class = FeedbackCreateForm
     success_message = 'Ваше письмо успешно отправлено администрации сайта'
     template_name = 'system/feedback.html'
     extra_context = {'title': 'Контактная форма'}
-    success_url = reverse_lazy('posts')
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -348,5 +334,5 @@ class FeedbackCreateView(SuccessMessageMixin, CreateView):
             feedback.ip_address = get_client_ip(self.request)
             if self.request.user.is_authenticated:
                 feedback.user = self.request.user
-            send_contact_email_message(feedback.subject, feedback.email, feedback.content, feedback.ip_address, feedback.user_id)
+            send_contact_email_message_task.delay(feedback.subject, feedback.email, feedback.content, feedback.ip_address, feedback.user_id)
         return super().form_valid(form)

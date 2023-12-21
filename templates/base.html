@@ -31,6 +31,9 @@
                         <a href="{% url "posts_rec" %}" class="nav-link text-white">Рекомендации</a>
                     </li>
                     <li>
+                        <a href="{% url "feedback" %}" class="nav-link text-white">Обратная связь</a>
+                    </li>
+                    <li>
                         <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" method="get" action="{% url 'posts' %}">
                             <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}">
                         </form>
